@@ -13,20 +13,16 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
 
 import { IUser } from '@/types/user.d';
+import { ApiMethod } from '@/decorators/method';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	const users: Array<IUser> = [
-		{ id: 1, name: 'John', email: 'john@example.com' },
-		{ id: 2, name: 'Sophie', email: 'sophie@example.com' },
-		{ id: 3, name: 'Thomas', email: 'thomas@example.com' },
-		{ id: 4, name: 'Mary', email: 'mary@example.com' },
-		{ id: 5, name: 'Alex', email: 'alex@example.com' },
-	];
+const users: Array<IUser> = [
+	{ id: 1, name: 'John', email: 'john@example.com' },
+	{ id: 2, name: 'Sophie', email: 'sophie@example.com' },
+	{ id: 3, name: 'Thomas', email: 'thomas@example.com' },
+	{ id: 4, name: 'Mary', email: 'mary@example.com' },
+	{ id: 5, name: 'Alex', email: 'alex@example.com' },
+];
 
-	if (req.method === 'GET') {
-		return res.status(200).json(users);
-	} 
-	
-	return res.status(405).json({ message: 'Method Not Allowed' });
-	
-};
+export default ApiMethod('GET')(async (req: NextApiRequest, res: NextApiResponse) => {
+	return res.status(200).json(users);
+});
